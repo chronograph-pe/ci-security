@@ -1,0 +1,24 @@
+name: 'Semgrep SAST Scan'
+
+on:
+  workflow_call:
+    inputs:
+      semgrep-scan-timeout:
+        required: false
+        type: string
+        default: 300
+    secrets:
+      semgrep-app-token:
+        required: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@v3
+      - run: semgrep ci
+        env:
+          SEMGREP_APP_TOKEN: ${{ secrets.semgrep-app-token }}
+          SEMGREP_TIMEOUT: ${{ secrets.semgrep-scan-timeout }}
