@@ -25,14 +25,14 @@ on: [push]
 
 jobs:
   semgrep-sast-scan:
-    uses: rob-sitro/security-checks-action/.github/workflows/semgrep-sast.yml@main
+    uses: chronograph-pe/ci-security/.github/workflows/semgrep-sast.yml@main
     with:
       semgrep-scan-timeout: 300
     secrets:
       semgrep-app-token: ${{ secrets.SEMGREP_APP_TOKEN }}
 
   dependency-license-check:
-    uses: rob-sitro/security-checks-action/.github/workflows/dependency-license-check.yml@main
+    uses: chronograph-pe/ci-security/.github/workflows/dependency-license-check.yml@main
     with:
       dependency-check-config-file: "dependency-check-config.yml"
       
