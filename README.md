@@ -7,6 +7,8 @@ Available security tools are:
 2. [A dependency license check](https://github.com/chronograph-pe/dependency-track-gh-action): A Cg developed tool to check projects for approved software dependency licenses. 
 
 ## Prerequisites
+Add a deploy key secret called `DEPLOY_KEY` to your repo to use `ci-security`. Contact the security team to set this up for you.
+
 To use the Semgrep SAST, you need to create a Semgrep app token and store it as a secret in your repository. 
 
 To use the dependency license check, you need to create:
@@ -23,16 +25,26 @@ To use the dependency license check, you need to create:
 ```yaml
 on: [push]
 
+
 jobs:
+
+  setup:
+    uses: actions/checkout@v3
+    with:
+      repository: 'chronograph-pe/ci-security'
+      ref: 'main'
+      ssh-key: ${{ secrets.DEPLOY_KEY }}
+      path: 'ci-security'
+
   semgrep-sast-scan:
-    uses: chronograph-pe/ci-security/.github/workflows/semgrep-sast.yml@main
+    uses: ./ci-security/.github/workflows/semgrep-sast.yml@main
     with:
       semgrep-scan-timeout: 300
     secrets:
       semgrep-app-token: ${{ secrets.SEMGREP_APP_TOKEN }}
 
   dependency-license-check:
-    uses: chronograph-pe/ci-security/.github/workflows/dependency-license-check.yml@main
+    uses: ./ci-security/.github/workflows/dependency-license-check.yml@main
     with:
       dependency-check-config-file: "dependency-check-config.yml"
       
