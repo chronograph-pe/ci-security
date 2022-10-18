@@ -29,7 +29,7 @@ on: [push]
 jobs:
 
   setup:
-    uses: actions/checkout@v3
+    uses: chronograph-pe/checkout@v3
     with:
       repository: 'chronograph-pe/ci-security'
       ref: 'main'
