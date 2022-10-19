@@ -33,7 +33,7 @@ jobs:
 
       - name: Build dockerfile
         if: ${{ inputs.dockerfile-dir != '' }}
-        run: docker build ${{ inputs.dockerfile }} --file Dockerfile --tag localbuild/testimage:latest
+        run: docker build ${{ inputs.dockerfile-dir }} --file Dockerfile --tag localbuild/testimage:latest
         shell: bash
       
       - uses: anchore/scan-action@v3
