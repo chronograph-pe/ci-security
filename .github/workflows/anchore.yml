@@ -32,12 +32,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Build dockerfile
-        if: ${{ inputs.dockerfile != '' }}
+        if: ${{ inputs.dockerfile-dir != '' }}
         run: docker build ${{ inputs.dockerfile }} --file Dockerfile --tag localbuild/testimage:latest
         shell: bash
       
       - uses: anchore/scan-action@v3
-        if: ${{ inputs.dockerfile != '' }}
+        if: ${{ inputs.dockerfile-dir != '' }}
         with:
           image: "localbuild/testimage:latest"
           fail-build: ${{ inputs.fail-build }}
