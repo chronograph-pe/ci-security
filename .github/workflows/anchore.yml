@@ -19,7 +19,7 @@ on:
         required: false
         type: string
         default: ""
-      dockerfile:
+      dockerfile-dir:
         required: false
         type: string
         default: ""
