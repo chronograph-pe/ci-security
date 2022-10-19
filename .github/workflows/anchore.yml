@@ -46,7 +46,7 @@ jobs:
 
       - name: Run docker-compose
         if: ${{ inputs.docker-compose-file != '' }}
-        run: docker-compose build -f ${{ inputs.docker-compose-file}}
+        run: docker-compose -f ${{ inputs.docker-compose-file}} build
         shell: bash
 
       - name: Get images
