@@ -1,0 +1,45 @@
+name: 'Anchore Container Vulnerability Scan'
+
+on:
+  workflow_call:
+    inputs:
+      severity-cutoff:
+        required: false
+        type: string
+        default: "high"
+      fail-build:
+        required: false
+        type: boolean
+        default: false
+      output-format:
+        required: false
+        type: string
+        default: "table"
+      docker-compose-file:
+        required: false
+        type: string
+        default: ""
+      dockerfile:
+        required: false
+        type: string
+        default: ""
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build dockerfile
+        if: ${{ inputs.dockerfile != '' }}
+        run: docker build ${{ inputs.dockerfile }} --file Dockerfile --tag localbuild/testimage:latest
+        shell: bash
+      
+      - uses: anchore/scan-action@v3
+        if: ${{ inputs.dockerfile != '' }}
+        with:
+          image: "localbuild/testimage:latest"
+          fail-build: ${{ inputs.fail-build }}
+          severity-cutoff: ${{ inputs.severity-cutoff }}
+          output-format: ${{ inputs.output-format }}
