@@ -43,3 +43,29 @@ jobs:
           fail-build: ${{ inputs.fail-build }}
           severity-cutoff: ${{ inputs.severity-cutoff }}
           output-format: ${{ inputs.output-format }}
+
+      - name: Run docker-compose
+        if: ${{ inputs.docker-compose-file != '' }}
+        run: docker-compose build -f ${{ inputs.docker-compose-file}}
+        shell: bash
+
+      - name: Get images
+        if: ${{ inputs.docker-compose-file != '' }}
+        run: |
+          docker images > images.txt
+
+          input=images.txt
+
+          while IFS= read -r line
+          do
+              read -a arr <<< $line
+              REPO_NAME=${arr[0]}
+
+              if [[ "$REPO_NAME" != "REPOSITORY" ]]; then
+                  TAG=${arr[1]}
+                  IMAGE_NAME="$REPO_NAME:$TAG"
+                  echo $IMAGE_NAME
+              fi
+
+          done < "$input"
+        shell: bash
