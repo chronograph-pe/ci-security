@@ -13,16 +13,16 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
     steps:
-      - uses: actions/checkout@v3
+      - uses: chronograph-pe/checkout@main
 
       - name: Checkout dependency license check repository
-        uses: chronograph-pe/checkout@v3
+        uses: chronograph-pe/checkout@main
         with:
           repository: chronograph-pe/dependency-track-gh-action
           ref: main
           path: dependency-track-gh-action
 
-      - uses: actions/setup-python@v4
+      - uses: chronograph-pe/setup-python@main
         with:
           python-version: '3.10'
           cache: 'pip'

@@ -17,7 +17,7 @@ jobs:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]')
     steps:
-      - uses: actions/checkout@v3
+      - uses: chronograph-pe/checkout@main
       - run: semgrep ci
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.semgrep-app-token }}
