@@ -54,6 +54,8 @@ jobs:
         run: |
           docker images > images.txt
 
+          imagesArray=()
+
           input=images.txt
 
           while IFS= read -r line
@@ -67,12 +69,14 @@ jobs:
 
                   if [[ $IMAGE_NAME = ${{ github.event.repository.name }}* ]]
                   then
-                    echo $IMAGE_NAME
-                  else
-                    echo "No match - IMAGE_NAME"
+                    echo "Image $IMAGE_NAME found."
+                    imagesArray+=($IMAGE_NAME)
                   fi
 
               fi
 
           done < "$input"
+
+          echo "IMAGES_ARRAY=$imagesArray" >> $GITHUB_ENV
+          echo "IMAGES ARRAY == ${{ env.IMAGES_ARRAY }}"
         shell: bash
