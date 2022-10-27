@@ -50,6 +50,7 @@ jobs:
         shell: bash
 
       - name: Get images
+        id: getimages
         if: ${{ inputs.docker-compose-file != '' }}
         run: |
           docker images > images.txt
@@ -77,7 +78,11 @@ jobs:
 
           done < "$input"
 
-          echo "IMAGES_ARRAY=$imagesArray" >> $GITHUB_ENV
-          echo "the actual array $imagesArray"
-          echo "IMAGES ARRAY == ${{ env.IMAGES_ARRAY }}"
+          echo "here is the actual array ${imagesArray[@]}"
+          echo ::set-output name=imagesArray::${imagesArray[@]}
+        shell: bash
+
+      - name: Print stuff
+        if: ${{ inputs.docker-compose-file != '' }}
+        run: "these are the outputs ${{ steps.getimages.outputs.imagesArray }}"
         shell: bash
