@@ -64,7 +64,14 @@ jobs:
               if [[ "$REPO_NAME" != "REPOSITORY" ]]; then
                   TAG=${arr[1]}
                   IMAGE_NAME="$REPO_NAME:$TAG"
-                  echo $IMAGE_NAME
+
+                  if [[ $IMAGE_NAME = ${{ github.event.repository.name }}* ]]
+                  then
+                    echo $IMAGE_NAME
+                  else
+                    echo "No match - IMAGE_NAME"
+                  fi
+
               fi
 
           done < "$input"
