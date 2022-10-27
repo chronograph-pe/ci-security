@@ -78,5 +78,6 @@ jobs:
           done < "$input"
 
           echo "IMAGES_ARRAY=$imagesArray" >> $GITHUB_ENV
+          echo "the actual array $imagesArray"
           echo "IMAGES ARRAY == ${{ env.IMAGES_ARRAY }}"
         shell: bash
