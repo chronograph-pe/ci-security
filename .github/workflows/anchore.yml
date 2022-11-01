@@ -78,7 +78,7 @@ jobs:
 
           done < "$input"
 
-          echo "DOCKER_IMAGES=${imagesArray[@]} >> $GITHUB_ENV
+          echo "DOCKER_IMAGES=${imagesArray[@]} >> $GITHUB_OUTPUT
         shell: bash
 
   run-with-docker-compose:
@@ -87,4 +87,4 @@ jobs:
     if: ${{ inputs.docker-compose-file != '' }}
     steps:
       - run: |
-          echo "this is env ${{ env.DOCKER_IMAGES }}"
+          echo "this is env ${{ needs.run.outputs.DOCKER_IMAGES }}""
