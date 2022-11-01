@@ -58,6 +58,7 @@ jobs:
           docker images > images.txt
 
           input=images.txt
+          imagesArray="["
 
           while IFS= read -r line
           do
@@ -75,6 +76,9 @@ jobs:
                   fi
 
               fi
+          imagesArray=${imagesArray::-1}
+          imagesArray+="]"
+          IMG='${{ toJSON($imagesArray) }}'
 
           done < "$input"
           echo "images=$imagesArray" >> $GITHUB_OUTPUT
