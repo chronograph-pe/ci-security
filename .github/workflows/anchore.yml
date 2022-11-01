@@ -79,7 +79,8 @@ jobs:
               fi
 
           done < "$input"
-          echo ::set-output name=value::${{ toJSON(${imagesArray[@]}) }}
+
+          echo ::set-output name=value::{${imagesArray[@]}}
         shell: bash
 
   run-with-docker-compose:
@@ -88,4 +89,5 @@ jobs:
     if: ${{ inputs.docker-compose-file != '' }}
     steps:
       - run: |
+          echo "This is the matrix output ${{ needs.run.outputs.matrix }}"
           echo "this is json matrix output ${{fromJSON(needs.run.outputs.matrix)}}"
