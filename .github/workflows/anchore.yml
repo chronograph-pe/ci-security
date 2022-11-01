@@ -90,3 +90,4 @@ jobs:
     steps:
       - run: |
           echo "This is the matrix output ${{ needs.run.outputs.matrix }}"
+          echo "this is json matrix output ${{fromJSON(needs.run.outputs.matrix)}}"
