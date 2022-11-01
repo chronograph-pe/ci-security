@@ -87,9 +87,6 @@ jobs:
     needs: [ run ]
     runs-on: ubuntu-latest
     if: ${{ inputs.docker-compose-file != '' }}
-    strategy:
-      matrix:
-        value: ${{fromJson(needs.run.outputs.matrix)}}
     steps:
       - run: |
-          echo "${{ matrix.value }}"
+          echo "This is the matrix output ${{ needs.run.outputs.matrix }}"
