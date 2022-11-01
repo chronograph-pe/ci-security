@@ -91,7 +91,7 @@ jobs:
     if: ${{ inputs.docker-compose-file != '' }}
     strategy:
       matrix:
-        image: ${{toJSON(needs.run.outputs.images)}}
+        image: ${{fromJSON(needs.run.outputs.images)}}
     steps:
       - run: |
           echo "this is env ${{ needs.run.outputs.images }}"
