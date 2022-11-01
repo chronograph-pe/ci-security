@@ -80,7 +80,7 @@ jobs:
 
           done < "$input"
 
-          echo "images=${{toJSON(${imagesArray[@]})}}" >> $GITHUB_OUTPUT
+          echo "images=${{toJSON(imagesArray[@])}}" >> $GITHUB_OUTPUT
 
           
         shell: bash
