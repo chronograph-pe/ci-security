@@ -28,6 +28,8 @@ jobs:
   run:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
+    outputs:
+      images: ${{ steps.getimages.outputs.images }}
     steps:
       - uses: actions/checkout@v2
 
@@ -78,7 +80,7 @@ jobs:
 
           done < "$input"
 
-          echo "DOCKER_IMAGES=${imagesArray[@]}" >> $GITHUB_OUTPUT
+          echo "images=${imagesArray[@]}" >> $GITHUB_OUTPUT
         shell: bash
 
   run-with-docker-compose:
@@ -87,4 +89,5 @@ jobs:
     if: ${{ inputs.docker-compose-file != '' }}
     steps:
       - run: |
-          echo "this is env ${{ needs.run.outputs.DOCKER_IMAGES }}""
+          echo "this is env ${{ needs.run.outputs.images }}"
+          echo join( ${{ needs.run.outputs.images }}, ", " )
