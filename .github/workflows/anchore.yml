@@ -23,6 +23,8 @@ on:
         required: false
         type: string
         default: ""
+     outputs:
+      matrix: ${{ steps.getimages.outputs.imagesArray }}
 
 jobs:
   run:
@@ -82,7 +84,17 @@ jobs:
           echo ::set-output name=imagesArray::${imagesArray[@]}
         shell: bash
 
-      - name: Print stuff
-        if: ${{ inputs.docker-compose-file != '' }}
-        run: "these are the outputs ${{ steps.getimages.outputs.imagesArray }}"
+    
+    docker-compose-anchore-scan:
+      needs: [ run ]
+      runs-on: ubuntu-latest
+      if: ${{ inputs.docker-compose-file != '' }}
+      strategy:
+        matrix:
+          imagesArray: ${{fromJson(needs.run.outputs.imagesArray)}}
+      
+      steps:
+      - run: |
+          echo "${{ matrix.imagesArray }}"
         shell: bash
+
