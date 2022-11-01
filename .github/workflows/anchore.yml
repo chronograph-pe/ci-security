@@ -78,7 +78,6 @@ jobs:
               fi
           imagesArray=${imagesArray::-1}
           imagesArray+="]"
-          IMG='${{ toJSON("$imagesArray") }}'
 
           done < "$input"
           echo "images=$imagesArray" >> $GITHUB_OUTPUT
