@@ -80,7 +80,9 @@ jobs:
 
           done < "$input"
 
-          echo "images=${imagesArray[@]}" >> $GITHUB_OUTPUT
+          echo "images=${{toJSON(${imagesArray[@]})}}" >> $GITHUB_OUTPUT
+
+          
         shell: bash
 
   run-with-docker-compose:
@@ -90,4 +92,3 @@ jobs:
     steps:
       - run: |
           echo "this is env ${{ needs.run.outputs.images }}"
-          echo "this is matrix ${{toJSON(needs.run.outputs.images)}} "
