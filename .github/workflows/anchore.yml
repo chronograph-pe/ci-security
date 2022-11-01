@@ -90,4 +90,4 @@ jobs:
     steps:
       - run: |
           echo "this is env ${{ needs.run.outputs.images }}"
-          echo join( ${{ needs.run.outputs.images }}, ", " )
+          echo "this is matrix ${{toJSON(needs.run.outputs.images)}} "
