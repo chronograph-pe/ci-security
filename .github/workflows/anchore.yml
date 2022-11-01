@@ -23,13 +23,13 @@ on:
         required: false
         type: string
         default: ""
-    outputs:
-      matrix: ${{ steps.getimages.outputs.imagesArray }}
 
 jobs:
   run:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
+    outputs: 
+      images: ${{ steps.getimages.outputs.imagesArray }}
     steps:
       - uses: actions/checkout@v2
 
@@ -80,21 +80,13 @@ jobs:
 
           done < "$input"
 
-          echo "here is the actual array ${imagesArray[@]}"
           echo ::set-output name=imagesArray::${imagesArray[@]}
         shell: bash
 
-    
-    docker-compose-anchore-scan:
-      needs: [ run ]
-      runs-on: ubuntu-latest
-      if: ${{ inputs.docker-compose-file != '' }}
-      strategy:
-        matrix:
-          imagesArray: ${{fromJson(needs.run.outputs.imagesArray)}}
-      
-      steps:
+  run-with-docker-compose:
+    strategy:
+      matrix:
+        images: ${{ steps.getimages.outputs.imagesArray }}   
+    steps:
       - run: |
-          echo "${{ matrix.imagesArray }}"
-        shell: bash
-
+          echo "${{ matrix.images }}"
