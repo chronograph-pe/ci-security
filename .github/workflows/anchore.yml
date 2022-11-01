@@ -23,7 +23,7 @@ on:
         required: false
         type: string
         default: ""
-     outputs:
+    outputs:
       matrix: ${{ steps.getimages.outputs.imagesArray }}
 
 jobs:
