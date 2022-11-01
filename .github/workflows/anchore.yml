@@ -76,9 +76,8 @@ jobs:
                   fi
 
               fi
-          imagesArray=${imagesArray::-1}
-          imagesArray+="]"
 
+          imagesArray+="]"
           done < "$input"
           echo "images=$imagesArray" >> $GITHUB_OUTPUT
 
