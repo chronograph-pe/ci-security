@@ -84,9 +84,10 @@ jobs:
         shell: bash
 
   run-with-docker-compose:
+    needs: [ run ]
     strategy:
       matrix:
-        images: ${{ steps.getimages.outputs.imagesArray }}   
+        images: ${{ needs.run.outputs.imagesArray }}   
     steps:
       - run: |
           echo "${{ matrix.images }}"
