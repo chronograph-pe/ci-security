@@ -29,7 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
     outputs: 
-      images: ${{ steps.getimages.outputs.imagesArray }}
+      matrix: ${{ steps.getimages.outputs.value }}
     steps:
       - uses: actions/checkout@v2
 
@@ -80,15 +80,16 @@ jobs:
 
           done < "$input"
 
-          echo ::set-output name=imagesArray::${imagesArray[@]}
+          echo ::set-output name=value::${imagesArray[@]}
         shell: bash
 
   run-with-docker-compose:
     needs: [ run ]
     runs-on: ubuntu-latest
+    if: ${{ inputs.docker-compose-file != '' }}
     strategy:
       matrix:
-        images: ${{ needs.run.outputs.imagesArray }}   
+        value: ${{fromJson(needs.run.outputs.matrix)}}
     steps:
       - run: |
-          echo "${{ matrix.images }}"
+          echo "${{ matrix.value }}"
