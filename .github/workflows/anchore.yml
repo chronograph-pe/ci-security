@@ -80,7 +80,7 @@ jobs:
 
           done < "$input"
 
-          echo "images=${{toJSON(imagesArray[@])}}" >> $GITHUB_OUTPUT
+          echo "images=${imagesArray[@]}" >> $GITHUB_OUTPUT
 
           
         shell: bash
@@ -89,6 +89,10 @@ jobs:
     needs: [ run ]
     runs-on: ubuntu-latest
     if: ${{ inputs.docker-compose-file != '' }}
+    strategy:
+      matrix:
+        image: ${{toJSON(needs.run.outputs.images)}}
     steps:
       - run: |
           echo "this is env ${{ needs.run.outputs.images }}"
+          echo "matrix ${{ matrix.image }}"
