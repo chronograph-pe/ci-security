@@ -11,9 +11,13 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
-    if: (github.actor != 'dependabot[bot]')
+    # this job depends on github.head_ref, only available for pull_request/pull_request_target
+    if: github.actor != 'dependabot[bot]' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
     steps:
       - uses: actions/checkout@v3
+        with:
+          # https://github.com/stefanzweifel/git-auto-commit-action/blob/master/README.md#example-workflow
+          ref: ${{ github.head_ref }}
 
       - name: Checkout dependency license check repository
         uses: actions/checkout@v3
@@ -36,7 +40,7 @@ jobs:
             cat /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/job_summary.md >> $GITHUB_STEP_SUMMARY
             rm -rf dependency-track-gh-action
             rm -rf /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/job_summary.md
-            git pull origin ${{github.ref}} --ff-only
 
       - name: Commit license data to this branch
         uses: stefanzweifel/git-auto-commit-action@v4
+        
