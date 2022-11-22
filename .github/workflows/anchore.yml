@@ -81,7 +81,6 @@ jobs:
           done < "$input"
           echo "images=$imagesArray" >> $GITHUB_OUTPUT
 
-          
         shell: bash
 
   run-with-docker-compose:

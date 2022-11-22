@@ -12,7 +12,7 @@ jobs:
   run:
     runs-on: ubuntu-latest
     # this job depends on github.head_ref, only available for pull_request/pull_request_target
-    if: github.actor != 'dependabot[bot]' && github.event_name != 'pull_request' && github.event_name != 'pull_request_target'
+    if: github.actor != 'dependabot[bot]' && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: actions/checkout@v3
         with:
