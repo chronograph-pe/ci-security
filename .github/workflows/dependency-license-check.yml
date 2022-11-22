@@ -11,6 +11,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    continue-on-error: true
     # this job depends on github.head_ref, only available for pull_request/pull_request_target
     if: github.actor != 'dependabot[bot]' && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
