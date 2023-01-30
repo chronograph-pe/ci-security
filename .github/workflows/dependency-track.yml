@@ -1,0 +1,34 @@
+name: 'Dependency Track SCA'
+
+on:
+  workflow_call:
+    inputs:
+      language:
+        required: true
+        type: string
+        default: "nodejs"
+      dependency_track_url:
+        required: true
+        type: string
+    secrets:
+      dependency_track_key:
+        required: true
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    if: (github.actor != 'dependabot[bot]')
+    steps:
+      - uses: actions/checkout@v3
+
+      # Generates a BoM and uploads it to OWASP Dependency Track
+      - name: Generates BoM and upload to OWASP DTrack
+        id: riskscoreFromDT
+        uses:  Quobis/action-owasp-dependecy-track-check@main
+        with:
+          url: ${{ secrets.dependency_track_url }}
+          key:  ${{ secrets.dependency_track_key }}
+          language: ${{ inputs.language }}
+
+      # Show the risk score output 
+      - name: Get the output time
+        run: echo "The risk score of the project is ${{ steps.riskscoreFromDT.outputs.riskscore }}"
