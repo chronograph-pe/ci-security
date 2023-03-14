@@ -17,10 +17,10 @@ jobs:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]')
     steps:
+      - run: git config --global --add safe.directory /__w/chronograph/chronograph
       - uses: chronograph-pe/checkout@v3
         with:
           ref: ${{ github.head_ref }}
-      - run: git config --global --add safe.directory /__w/chronograph/chronograph
       - run: semgrep ci || true
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.semgrep-app-token }}
