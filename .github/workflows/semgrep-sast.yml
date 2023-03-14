@@ -17,7 +17,7 @@ jobs:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]')
     steps:
-      - run: git config --global --add safe.directory /__w/chronograph/chronograph
+      - run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
       - uses: chronograph-pe/checkout@v3
         with:
           ref: ${{ github.head_ref }}
