@@ -18,6 +18,8 @@ jobs:
     if: (github.actor != 'dependabot[bot]')
     steps:
       - uses: chronograph-pe/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
       - run: semgrep ci || true
         env:
           SEMGREP_APP_TOKEN: ${{ secrets.semgrep-app-token }}
