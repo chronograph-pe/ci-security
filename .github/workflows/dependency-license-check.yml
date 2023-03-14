@@ -15,13 +15,13 @@ jobs:
     # this job depends on github.head_ref, only available for pull_request/pull_request_target
     if: github.actor != 'dependabot[bot]' && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
-      - uses: actions/checkout@v3
+      - uses: chronograph-pe/checkout@v3
         with:
           # https://github.com/stefanzweifel/git-auto-commit-action/blob/master/README.md#example-workflow
           ref: ${{ github.head_ref }}
 
       - name: Checkout dependency license check repository
-        uses: actions/checkout@v3
+        uses: chronograph-pe/checkout@v3
         with:
           repository: chronograph-pe/dependency-track-gh-action
           ref: main
