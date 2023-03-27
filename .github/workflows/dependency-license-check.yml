@@ -23,9 +23,9 @@ jobs:
       - name: Checkout dependency license check repository
         uses: chronograph-pe/checkout@v3
         with:
-          repository: chronograph-pe/dependency-track-gh-action
+          repository: chronograph-pe/dependency-lic-check-action
           ref: main
-          path: dependency-track-gh-action
+          path: dependency-lic-check-action
 
       - uses: chronograph-pe/setup-python@v4
         with:
@@ -36,10 +36,10 @@ jobs:
         env:
           DEPENDENCY_CHECK_CONFIG: ${{ inputs.dependency-check-config-file }}
         run: |
-            pip install -r dependency-track-gh-action/requirements.txt
-            python dependency-track-gh-action/app/main.py
+            pip install -r dependency-lic-check-action/requirements.txt
+            python dependency-lic-check-action/app/main.py
             cat /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/job_summary.md >> $GITHUB_STEP_SUMMARY
-            rm -rf dependency-track-gh-action
+            rm -rf dependency-lic-check-action
             rm -rf /home/runner/work/${{ github.event.repository.name }}/${{ github.event.repository.name }}/job_summary.md
 
       - name: Commit license data to this branch
