@@ -17,8 +17,6 @@ jobs:
       image: returntocorp/semgrep
     if: (github.actor != 'dependabot[bot]')
     steps:
-      - name: Actions Permissions Monitor
-        uses: chronograph-pe/actions-permissions/monitor@v1
       - run: git config --global --add safe.directory /__w/${{ github.event.repository.name }}/${{ github.event.repository.name }}
       - uses: chronograph-pe/checkout@v3
         with:
