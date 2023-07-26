@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
     steps:
+      - name: Actions Permissions Monitor
+        uses: chronograph-pe/actions-permissions/monitor@v1
       - uses: chronograph-pe/checkout@v3
 
       # Generates a BoM and uploads it to OWASP Dependency Track
