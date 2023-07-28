@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: returntocorp/semgrep
-    if: (github.actor != 'dependabot[bot]')
+    if: github.actor != 'dependabot[bot]' && (github.event_name == 'pull_request' || github.event_name == 'pull_request_target')
     steps:
       - uses: chronograph-pe/harden-runner@cba0d00b1fc9a034e1e642ea0f1103c282990604 # v2.5.0
         continue-on-error: true
