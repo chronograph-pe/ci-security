@@ -18,10 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     if: (github.actor != 'dependabot[bot]')
     steps:
-      - uses: chronograph-pe/harden-runner@cba0d00b1fc9a034e1e642ea0f1103c282990604 # v2.5.0
-        continue-on-error: true
-        with:
-          egress-policy: audit
       - name: Actions Permissions Monitor
         uses: chronograph-pe/actions-permissions/monitor@v1
       - uses: chronograph-pe/checkout@v3
